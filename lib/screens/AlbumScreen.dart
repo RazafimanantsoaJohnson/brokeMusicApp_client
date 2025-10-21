@@ -4,11 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:brokemusicapp/components/AlbumTitleItem.dart';
 
 class AlbumScreenProps {
+  late String albumCoverUrl;
+  late String albumName;
+  late String artistName;
 
+  AlbumScreenProps(String cover, String name,String artist){
+    albumCoverUrl= cover;
+    albumName = name;
+    artistName = artist;
+  }
 }
 
 class AlbumScreen extends StatefulWidget {
-  const AlbumScreen({super.key});
+  final AlbumScreenProps albumData;
+  const AlbumScreen({super.key, required this.albumData});
 
   @override
   State<AlbumScreen> createState() => _AlbumScreenState();
@@ -18,11 +27,12 @@ class _AlbumScreenState extends State<AlbumScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AlbumScreenHero(),
+          AlbumScreenHero(albumData: widget.albumData),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 56.0),
             child: FloatingActionButton.extended(

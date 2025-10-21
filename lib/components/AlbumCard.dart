@@ -32,9 +32,12 @@ class AlbumCard extends StatelessWidget {
           Container(
             height: kCardHeight,
             padding: EdgeInsets.all(10.0),
-            child:Image.network(
-              albumCoverUrl,
-              fit: BoxFit.fitHeight,
+            child:Hero(
+              tag: "AlbumCover",
+              child: Image.network(
+                albumCoverUrl,
+                fit: BoxFit.fitHeight,
+              ),
             ),
           ),
         ]

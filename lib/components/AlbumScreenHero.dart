@@ -1,8 +1,10 @@
+import 'package:brokemusicapp/screens/AlbumScreen.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
 
 class AlbumScreenHero extends StatelessWidget {
-  const AlbumScreenHero({super.key});
+  final AlbumScreenProps albumData;
+  const AlbumScreenHero({super.key, required this.albumData});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +19,12 @@ class AlbumScreenHero extends StatelessWidget {
             Expanded(
                 child: Container(
                     width: kAlbumScreenCardWidth,
-                    child: Image.network(
-                        kTestAlbumUrl,
-                      fit: BoxFit.fill,
+                    child: Hero(
+                      tag: "AlbumCover",
+                      child: Image.network(
+                          albumData.albumCoverUrl,
+                        fit: BoxFit.fill,
+                      ),
                     )
                 )
             ),
@@ -29,7 +34,7 @@ class AlbumScreenHero extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                      "blonde",
+                      albumData.albumName,
                       style: TextStyle(
                         // fontWeight: FontWeight.w500,
                           fontSize: kAlbumTitleFontSize,
@@ -48,7 +53,7 @@ class AlbumScreenHero extends StatelessWidget {
                           )
                       ),
                       Text(
-                          "Frank Ocean",
+                          albumData.artistName,
                           style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.w500,
