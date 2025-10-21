@@ -15,6 +15,7 @@ class AlbumCard extends StatelessWidget {
       child: Stack(
         children: [
           Container(),
+
           BackdropFilter(
               filter: ImageFilter.blur(sigmaX:3.0, sigmaY:3.0),
               child: Container(
@@ -25,12 +26,16 @@ class AlbumCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(4.0)),
                   ),
-                  child:  Image.network(
-                    albumCoverUrl,
-                    fit: BoxFit.fitHeight,
-                  ),
                 ),
               )
+          ),
+          Container(
+            height: kCardHeight,
+            padding: EdgeInsets.all(10.0),
+            child:Image.network(
+              albumCoverUrl,
+              fit: BoxFit.fitHeight,
+            ),
           ),
         ]
       ),

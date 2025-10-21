@@ -1,5 +1,6 @@
 import 'package:brokemusicapp/components/AlbumCard.dart';
 import 'package:brokemusicapp/components/constants.dart';
+import 'package:brokemusicapp/screens/AlbumScreen.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       bottomNavigationBar: NavigationBar(
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         selectedIndex: currentPageIndex,
@@ -47,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
             )
           )
         ),
-        SafeArea(child: Text("Here we are on the search screen"))
+        AlbumScreen()
       ][currentPageIndex]
     );
   }
