@@ -14,7 +14,7 @@ class AlbumCard extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Container(),
+          // Container(),
 
           BackdropFilter(
               filter: ImageFilter.blur(sigmaX:3.0, sigmaY:3.0),

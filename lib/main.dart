@@ -1,5 +1,7 @@
+import 'package:brokemusicapp/PlayerBrain.dart';
 import 'package:brokemusicapp/screens/MainScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,18 +13,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-      theme: ThemeData.light().copyWith(
-        primaryColor: Color(0xFFFFFFFF),
-        primaryColorDark: Color(0xFFF1F1F1),
-      ),
-      home: Scaffold(
-        body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          child: MainScreen()
+    return ChangeNotifierProvider(
+      create: (_) => PlayerBrain(),
+      child: MaterialApp(
+        theme: ThemeData.light().copyWith(
+          primaryColor: Color(0xFFFFFFFF),
+          primaryColorDark: Color(0xFFF1F1F1),
+        ),
+        home: Scaffold(
+          body: Container(
+            width: double.infinity,
+            height: double.infinity,
+            child: MainScreen()
+          )
         )
-      )
+      ),
     );
   }
 }

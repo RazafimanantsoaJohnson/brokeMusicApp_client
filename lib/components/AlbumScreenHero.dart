@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:brokemusicapp/screens/AlbumScreen.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
@@ -18,15 +20,27 @@ class AlbumScreenHero extends StatelessWidget {
           children:[
             Expanded(
                 child: Container(
-                    width: kAlbumScreenCardWidth,
-                    child: Hero(
-                      tag: "AlbumCover",
-                      child: Image.network(
-                          albumData.albumCoverUrl,
-                        fit: BoxFit.fill,
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                  ),
+                  child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+                        child: Container(
+                          color: Colors.white.withAlpha(50),
+                            width: kAlbumScreenHeroWidth,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Hero(
+                                tag: "AlbumCover",
+                                child: Image.network(
+                                  albumData.albumCoverUrl,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            )
+                        ),
                       ),
-                    )
-                )
+                ),
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 16.0),

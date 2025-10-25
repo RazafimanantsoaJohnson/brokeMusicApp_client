@@ -1,5 +1,6 @@
 import 'package:brokemusicapp/components/AlbumCard.dart';
 import 'package:brokemusicapp/components/constants.dart';
+import 'package:brokemusicapp/constants.dart';
 import 'package:brokemusicapp/screens/AlbumScreen.dart';
 import 'package:brokemusicapp/screens/SearchScreen.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: Colors.white,
       bottomNavigationBar: NavigationBar(
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+        backgroundColor: Color(kTertiaryColor),
         selectedIndex: currentPageIndex,
         onDestinationSelected: (int index){
           setState((){
@@ -65,16 +67,16 @@ class _MainScreenState extends State<MainScreen> {
                       child: AlbumCard(
                         albumCoverUrl: "https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720be9d5526",
                       ),
-                    )),
-
+                    )
+                    ),
                   ]
                 ),
               ]
             )
           )
         ),
-        // AlbumScreen(albumData: albumData)
-        SearchScreen()
+        AlbumScreen(albumData: albumData)
+        // SearchScreen()
       ][currentPageIndex]
     );
   }
