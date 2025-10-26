@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:brokemusicapp/components/AlbumTitleItem.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:provider/provider.dart';
+import 'PlayerScreen.dart';
 
 class AlbumData {
   late String id;
@@ -187,7 +188,14 @@ class _AlbumScreenState extends State<AlbumScreen> {
             IconButton(onPressed: (){
               Provider.of<PlayerBrain>(context, listen:false).pauseCurrentlyPlayedTrack();
             }, icon: Icon(Icons.pause_circle_filled)),
-            
+            IconButton(onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context){return PlayerScreen();}
+                )
+              );
+            }, icon: Icon(Icons.ac_unit_rounded)),
             AlbumTitleItem(),
             AlbumTitleItem(),
             AlbumTitleItem(),

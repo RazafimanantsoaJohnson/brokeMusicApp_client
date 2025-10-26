@@ -1,4 +1,5 @@
 import 'package:brokemusicapp/components/AlbumCard.dart';
+import 'package:brokemusicapp/components/FloatingPlayerButton.dart';
 import 'package:brokemusicapp/components/constants.dart';
 import 'package:brokemusicapp/constants.dart';
 import 'package:brokemusicapp/screens/AlbumScreen.dart';
@@ -77,7 +78,9 @@ class _MainScreenState extends State<MainScreen> {
         ),
         AlbumScreen(albumData: albumData)
         // SearchScreen()
-      ][currentPageIndex]
+      ][currentPageIndex],
+      floatingActionButton: FloatingPlayerButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

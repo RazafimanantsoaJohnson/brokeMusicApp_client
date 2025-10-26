@@ -17,6 +17,8 @@ const kAlbumTitleHeight = 64.0;
 const kCardGap = 10.0;
 const kAlbumItemSearchResultBorderRadius = 16.0;
 
+const kPlayerCoverBorderRadius = 24.0;
+
 var kAlbumTitleTrackNumberStyle = TextStyle(
     color: Colors.grey.shade700,
     fontSize: 18.0,
