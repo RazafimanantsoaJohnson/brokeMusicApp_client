@@ -2,9 +2,12 @@ import 'package:brokemusicapp/components/AlbumCard.dart';
 import 'package:brokemusicapp/components/FloatingPlayerButton.dart';
 import 'package:brokemusicapp/components/constants.dart';
 import 'package:brokemusicapp/constants.dart';
+import 'package:brokemusicapp/logics/AuthBrain.dart';
+import 'package:brokemusicapp/logics/Navigation.dart';
 import 'package:brokemusicapp/screens/AlbumScreen.dart';
 import 'package:brokemusicapp/screens/SearchScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -61,8 +64,10 @@ class _MainScreenState extends State<MainScreen> {
                     Expanded(child:GestureDetector(
                       onTap: (){
                         setState(() {
-                          currentPageIndex = 1;
-                          albumData = AlbumScreenProps("https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720be9d5526", "Blonde", "Frank Ocean");
+                          // currentPageIndex = 1;
+                          // albumData = AlbumScreenProps("https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720be9d5526", "Blonde", "Frank Ocean");
+                          String authToken = Provider.of<AuthBrain>(context, listen: false).accessToken;
+                          Provider.of<NavigationBrain>(context, listen:false).navigateToAlbumScreen("3mH6qwIy9crq0I9YQbOuDf",  authToken);
                         });
                       },
                       child: AlbumCard(

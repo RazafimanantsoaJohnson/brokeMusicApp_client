@@ -1,4 +1,6 @@
-import 'package:brokemusicapp/PlayerBrain.dart';
+import 'package:brokemusicapp/logics/AuthBrain.dart';
+import 'package:brokemusicapp/logics/Navigation.dart';
+import 'package:brokemusicapp/logics/PlayerBrain.dart';
 import 'package:brokemusicapp/screens/MainScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,8 +15,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return ChangeNotifierProvider(
-      create: (_) => PlayerBrain(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => PlayerBrain()),
+        ChangeNotifierProvider(create: (_) => AuthBrain()),
+        ChangeNotifierProvider(create: (_)=> NavigationBrain()),
+
+      ],
       child: MaterialApp(
         theme: ThemeData.light().copyWith(
           primaryColor: Color(0xFFFFFFFF),

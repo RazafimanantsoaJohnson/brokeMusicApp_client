@@ -1,10 +1,12 @@
+import 'package:brokemusicapp/logics/PlayerBrain.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
 import '../constants.dart';
 
 
 class AlbumTitleItem extends StatefulWidget {
-  const AlbumTitleItem({super.key});
+  TrackData track;
+  AlbumTitleItem({super.key,required this.track});
 
   @override
   State<AlbumTitleItem> createState() => _AlbumTitleItemState();
@@ -13,6 +15,10 @@ class AlbumTitleItem extends StatefulWidget {
 class _AlbumTitleItemState extends State<AlbumTitleItem> {
   @override
   Widget build(BuildContext context) {
+    Duration duration = Duration(milliseconds:  widget.track.duration);
+    int minutesDuration = duration.inMinutes;
+    String remainingSeconds = (duration.inSeconds %60).toString().padLeft(2, '0');
+
     return Container(
       height: kAlbumTitleHeight,
       child: Row(
@@ -23,7 +29,7 @@ class _AlbumTitleItemState extends State<AlbumTitleItem> {
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             child: Center(
               child: Text(
-                  "1",
+                  "${widget.track.trackNumber}",
                   style: kAlbumTitleTrackNumberStyle
               ),
             ),
@@ -39,7 +45,7 @@ class _AlbumTitleItemState extends State<AlbumTitleItem> {
                         Padding(
                           padding: EdgeInsets.only(top: kAlbumTitleSeparatorHeight),
                           child: Text(
-                              "Nikes",
+                              widget.track.name,
                               style: TextStyle(
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.w500,
@@ -50,7 +56,7 @@ class _AlbumTitleItemState extends State<AlbumTitleItem> {
                         Padding(
                             padding: EdgeInsets.only(top: kAlbumTitleSeparatorHeight, right: 16.0),
                             child: Text(
-                              "5:14",
+                              "${minutesDuration}:$remainingSeconds",
                               style: kAlbumTitleTrackNumberStyle.copyWith(
                                   fontSize: 16.0
                               ),
@@ -61,7 +67,7 @@ class _AlbumTitleItemState extends State<AlbumTitleItem> {
                   ),
                   Container(
                     height: kAlbumTitleSeparatorHeight,
-                    color: Color(kSecondaryColor),
+                    color: Colors.grey.shade400,
                   )
                 ],
               )

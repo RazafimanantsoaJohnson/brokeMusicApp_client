@@ -11,7 +11,7 @@ const kAlbumScreenHeroMarginTop = 50.0;
 const kAlbumScreenHeroMarginBottom = 16.0;
 const kAlbumScreenCardWidth = 300.0;
 
-const kAlbumTitleSeparatorHeight = 4.0;
+const kAlbumTitleSeparatorHeight = 1.0;
 const kAlbumTitleHeight = 64.0;
 
 const kCardGap = 10.0;

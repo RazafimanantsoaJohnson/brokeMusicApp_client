@@ -18,7 +18,7 @@ class TrackData{
   TrackData({required this.discNumber, required this.duration, required this.name, required this.id, required this.trackNumber,
   this.trackUri = "", this.explicit = false, this.isAvailable= true, this.youtubeUrl= "", this.fileURL= "" });
 
-  TrackData.fromJson(Map<String,dynamic> track){
+  TrackData.fromJson(dynamic track){
     discNumber = track["disc_number"];
     duration = track["duration_ms"];
     explicit = track["explicit"];

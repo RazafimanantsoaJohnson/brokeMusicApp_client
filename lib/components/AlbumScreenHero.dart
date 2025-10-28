@@ -1,15 +1,17 @@
 import 'dart:ui';
 
+import 'package:brokemusicapp/logics/Navigation.dart';
 import 'package:brokemusicapp/screens/AlbumScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'constants.dart';
 
 class AlbumScreenHero extends StatelessWidget {
-  final AlbumScreenProps albumData;
-  const AlbumScreenHero({super.key, required this.albumData});
+  const AlbumScreenHero({super.key});
 
   @override
   Widget build(BuildContext context) {
+    AlbumData albumToShow = Provider.of<NavigationBrain>(context, listen:false).albumData;
     return Container(
       margin: EdgeInsets.only(top: kAlbumScreenHeroMarginTop, bottom: kAlbumScreenHeroMarginBottom),
       width: double.infinity,
@@ -33,7 +35,7 @@ class AlbumScreenHero extends StatelessWidget {
                               child: Hero(
                                 tag: "AlbumCover",
                                 child: Image.network(
-                                  albumData.albumCoverUrl,
+                                  albumToShow.albumCoverUrl,
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -42,13 +44,14 @@ class AlbumScreenHero extends StatelessWidget {
                       ),
                 ),
             ),
+
             Container(
               margin: EdgeInsets.symmetric(vertical: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                      albumData.albumName,
+                      albumToShow.name,
                       style: TextStyle(
                         // fontWeight: FontWeight.w500,
                           fontSize: kAlbumTitleFontSize,
@@ -67,7 +70,7 @@ class AlbumScreenHero extends StatelessWidget {
                           )
                       ),
                       Text(
-                          albumData.artistName,
+                          albumToShow.artistName,
                           style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.w500,
