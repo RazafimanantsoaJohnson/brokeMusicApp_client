@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:brokemusicapp/logics/Navigation.dart';
-import 'package:brokemusicapp/screens/AlbumScreen.dart';
+import 'package:brokemusicapp/models/Albums.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'constants.dart';

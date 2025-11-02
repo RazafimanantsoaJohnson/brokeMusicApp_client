@@ -6,54 +6,15 @@ import 'package:brokemusicapp/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:brokemusicapp/components/AlbumTitleItem.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:brokemusicapp/models/Albums.dart';
 import 'package:provider/provider.dart';
-import 'PlayerScreen.dart';
-
-class AlbumData {
-  late String id;
-  late String name;
-  late String albumType;
-  late int totalTracks;
-  late String albumUrl;
-  late String releaseDate;
-  late String releaseDatePrecision;
-  late String type;
-  late String artistName;
-  late String albumCoverUrl;
-
-  AlbumData({required this.id, required this.name, required this.albumType, required this.totalTracks, required this.albumUrl,
-  required this.releaseDate, required this.releaseDatePrecision, required this.type, required this.artistName, required this.albumCoverUrl});
-
-  AlbumData.fromJson(Map<String,dynamic> album){
-    id = album["id"];
-    name = album["name"];
-    albumType = album["albumType"];
-    totalTracks = album["total_tracks"];
-    albumUrl = album["albumUrl"];
-    releaseDate = album["release_date"];
-    releaseDatePrecision = album["release_date_precision"];
-    type = album["type"];
-    artistName = album["artist"];
-    albumCoverUrl = album["album_cover"];
-  }
-}
-
-class AlbumScreenProps {
-  late String albumCoverUrl;
-  late String albumName;
-  late String artistName;
+import 'package:brokemusicapp/models/Tracks.dart';
 
 
-  AlbumScreenProps(String cover, String name,String artist){
-    albumCoverUrl= cover;
-    albumName = name;
-    artistName = artist;
-  }
-}
 
 class AlbumScreen extends StatefulWidget {
-  final AlbumScreenProps albumData;
-  const AlbumScreen({super.key, required this.albumData});
+  // final AlbumScreenProps albumData;
+  const AlbumScreen({super.key});
 
   @override
   State<AlbumScreen> createState() => _AlbumScreenState();
@@ -109,6 +70,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AlbumData album= Provider.of<NavigationBrain>(context).albumData;
 
     return SafeArea(
       child: SingleChildScrollView(

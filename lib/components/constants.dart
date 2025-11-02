@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-const kCardWidth = 200.0;
-const kCardHeight= 250.0;
+const kCardWidth = 220.0;
+const kCardHeight= 240.0;
+const kAlbumScreenMarginBottom = 100.0;
 
 const kTestAlbumUrl = "https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720be9d5526";
 const kAlbumTitleFontSize = 32.0;
@@ -13,8 +14,9 @@ const kAlbumScreenCardWidth = 300.0;
 
 const kAlbumTitleSeparatorHeight = 1.0;
 const kAlbumTitleHeight = 64.0;
+const kAlbumTitleNumberOfChars = 28;
 
-const kCardGap = 10.0;
+const kCardGap = 14.0;
 const kAlbumItemSearchResultBorderRadius = 16.0;
 
 const kPlayerCoverBorderRadius = 24.0;

@@ -150,6 +150,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_glass_morphism:
+    dependency: "direct main"
+    description:
+      name: flutter_glass_morphism
+      sha256: c5e5e7ecc73b43cd1e1231e2a12eae8dc6fb77ed47d44073f9fe25f59481d506
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   flutter_lints:
     dependency: "direct dev"
     description:

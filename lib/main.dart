@@ -3,6 +3,7 @@ import 'package:brokemusicapp/logics/Navigation.dart';
 import 'package:brokemusicapp/logics/PlayerBrain.dart';
 import 'package:brokemusicapp/screens/MainScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_glass_morphism/flutter_glass_morphism.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -22,18 +23,20 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_)=> NavigationBrain()),
 
       ],
-      child: MaterialApp(
-        theme: ThemeData.light().copyWith(
-          primaryColor: Color(0xFFFFFFFF),
-          primaryColorDark: Color(0xFFF1F1F1),
-        ),
-        home: Scaffold(
-          body: Container(
-            width: double.infinity,
-            height: double.infinity,
-            child: MainScreen()
+      child: GlassMorphismThemeProvider(
+        child: MaterialApp(
+          theme: ThemeData.light().copyWith(
+            primaryColor: Color(0xFFFFFFFF),
+            primaryColorDark: Color(0xFFF1F1F1),
+          ),
+          home: Scaffold(
+            body: Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: MainScreen()
+            )
           )
-        )
+        ),
       ),
     );
   }

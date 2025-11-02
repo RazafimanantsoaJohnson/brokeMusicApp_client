@@ -6,6 +6,7 @@ import 'package:brokemusicapp/logics/AuthBrain.dart';
 import 'package:brokemusicapp/logics/Navigation.dart';
 import 'package:brokemusicapp/screens/AlbumScreen.dart';
 import 'package:brokemusicapp/screens/SearchScreen.dart';
+import 'package:brokemusicapp/models/Albums.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,10 +19,95 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentPageIndex = 0;
-  AlbumScreenProps albumData= AlbumScreenProps("", "", "");
+
+  String testAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJicm9rZW11c2ljYXBwIiwic3ViIjoiZWM4NzY4YWItMDcwYS00NTZmLTgxMTMtMDFmZmQ5MWViMmVjIiwiZXhwIjoxNzYyMDY5ODU3LCJpYXQiOjE3NjIwNjYyNTd9.ltuhcN18gBUj5LNWwEP_33araiferm3bge0SJFs5zhs";
+
+  @override
+  void initState() {
+    super.initState();
+  }
+  
+  Future<void> selectAlbum(AlbumData album) async{
+    Provider.of<NavigationBrain>(context, listen:false).setAlbumData(album);
+    Provider.of<NavigationBrain>(context, listen: false).showAlbumScreen();
+    await Provider.of<NavigationBrain>(context, listen:false).navigateToAlbumScreen(album, testAccessToken);
+  } 
+  
+
+  List<Widget> showRecentlyVisitedAlbums(){
+    List<AlbumData> albums = Provider.of<NavigationBrain>(context, listen: false).recentlyVisited;
+    List<Widget> result = [];
+    for(int i=0; i<albums.length; i+=2){
+      bool isSingleChild = false;
+      if (albums.length <= i+1){
+        isSingleChild = true;
+      }
+      List<Widget> rowChildren = [
+        SizedBox(width: 1.0),
+        Expanded(
+            child:GestureDetector(
+              onTap: () async{
+                setState(() {
+                  selectAlbum(albums[i]);
+                });
+              },
+              child: AlbumCard(
+                album: albums[i],
+              ),
+            )
+        )
+      ];
+
+      if (!isSingleChild){
+        rowChildren.add(
+            Expanded(
+              child: GestureDetector(
+                onTap: (){
+                  setState(() {
+                    selectAlbum(albums[i+1]);
+                  });
+                },
+                child: AlbumCard(
+                  album: albums[i+1],
+                ),
+              ),
+            )
+        );
+      } else {
+        rowChildren.add(
+          Expanded(
+            child: Container()
+          )
+        );
+      }
+      rowChildren.add(
+        SizedBox(width: 1.0)
+      );
+      
+      result.add(
+        Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: isSingleChild?MainAxisAlignment.start :MainAxisAlignment.spaceEvenly,
+            spacing: kCardGap,
+            children: rowChildren
+        ),
+      );
+    }
+    result.add(
+      SizedBox(
+        height: kAlbumScreenMarginBottom
+      )
+    );
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    String currentUserToken = Provider.of<AuthBrain>(context).accessToken;
+    Provider.of<NavigationBrain>(context, listen:false).getRecentlyVisitedAlbums(testAccessToken);
+    bool showAlbumScreen = Provider.of<NavigationBrain>(context).isAlbumScreenVisible;
+
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: NavigationBar(
@@ -30,6 +116,7 @@ class _MainScreenState extends State<MainScreen> {
         selectedIndex: currentPageIndex,
         onDestinationSelected: (int index){
           setState((){
+            Provider.of<NavigationBrain>(context, listen:false).hideAlbumScreen();
             currentPageIndex = index;
           });
         },
@@ -38,51 +125,16 @@ class _MainScreenState extends State<MainScreen> {
           NavigationDestination(icon: Icon(Icons.search), label: 'Search')
         ],
       ),
-      body: <Widget>[
+      body: showAlbumScreen? AlbumScreen(): <Widget>[
         SafeArea(
-          child: Center(
-            child: ListView(
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  spacing: kCardGap,
-                  children: [
-                    Expanded(
-                        child:GestureDetector(
-                          onTap: (){
-                            setState(() {
-                              currentPageIndex = 1;
-                              albumData = AlbumScreenProps("https://i.scdn.co/image/ab67616d0000b273c7ea04a9b455e3f68ef82550", "Take Care", "Drake");
-                            });
-                          },
-                          child: AlbumCard(
-                            albumCoverUrl: "https://i.scdn.co/image/ab67616d0000b273c7ea04a9b455e3f68ef82550",
-
-                          ),
-                        )),
-                    Expanded(child:GestureDetector(
-                      onTap: (){
-                        setState(() {
-                          // currentPageIndex = 1;
-                          // albumData = AlbumScreenProps("https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720be9d5526", "Blonde", "Frank Ocean");
-                          String authToken = Provider.of<AuthBrain>(context, listen: false).accessToken;
-                          Provider.of<NavigationBrain>(context, listen:false).navigateToAlbumScreen("3mH6qwIy9crq0I9YQbOuDf",  authToken);
-                        });
-                      },
-                      child: AlbumCard(
-                        albumCoverUrl: "https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720be9d5526",
-                      ),
-                    )
-                    ),
-                  ]
-                ),
-              ]
+            child: SingleChildScrollView(
+                child: Column(
+                    spacing: 10.0,
+                    children: showRecentlyVisitedAlbums()
+                )
             )
-          )
         ),
-        AlbumScreen(albumData: albumData)
-        // SearchScreen()
+        SearchScreen()
       ][currentPageIndex],
       floatingActionButton: FloatingPlayerButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

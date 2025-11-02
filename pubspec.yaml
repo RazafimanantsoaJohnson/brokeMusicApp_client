@@ -37,6 +37,7 @@ dependencies:
   audioplayers: ^6.5.1
   provider: ^6.1.5+1
   http: ^1.5.0
+  flutter_glass_morphism: ^1.0.2
 
 dev_dependencies:
   flutter_test:
