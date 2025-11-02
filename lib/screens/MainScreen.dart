@@ -20,7 +20,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int currentPageIndex = 0;
 
-  String testAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJicm9rZW11c2ljYXBwIiwic3ViIjoiZWM4NzY4YWItMDcwYS00NTZmLTgxMTMtMDFmZmQ5MWViMmVjIiwiZXhwIjoxNzYyMDY5ODU3LCJpYXQiOjE3NjIwNjYyNTd9.ltuhcN18gBUj5LNWwEP_33araiferm3bge0SJFs5zhs";
+  String testAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJicm9rZW11c2ljYXBwIiwic3ViIjoiZWM4NzY4YWItMDcwYS00NTZmLTgxMTMtMDFmZmQ5MWViMmVjIiwiZXhwIjoxNzYyMTA4ODkxLCJpYXQiOjE3NjIxMDUyOTF9.EOVlM3zCsCuabGGbzrYTjpbckejgSxcLAkNNbHXvg1g";
 
   @override
   void initState() {

@@ -71,6 +71,8 @@ class _AlbumScreenState extends State<AlbumScreen> {
   @override
   Widget build(BuildContext context) {
     AlbumData album= Provider.of<NavigationBrain>(context).albumData;
+    String authToken = Provider.of<AuthBrain>(context).accessToken;
+    List<TrackData> tracks = Provider.of<NavigationBrain>(context).tracks;
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -82,7 +84,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
               padding: EdgeInsets.symmetric(horizontal: 56.0),
               child: FloatingActionButton.extended(
                   onPressed: ()async {
-                    // Provider.of<PlayerBrain>(context, listen: false).playAlbum(tTracks);
+                    Provider.of<PlayerBrain>(context, listen: false).playAlbum(authToken, album.id,tracks);
 
                     setState((){
                       isSongPlaying= !isSongPlaying;

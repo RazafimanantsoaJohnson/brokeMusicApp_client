@@ -1,17 +1,26 @@
+import 'dart:convert';
+
 import 'package:audioplayers/audioplayers.dart';
+import 'package:brokemusicapp/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:brokemusicapp/models/Tracks.dart';
+import 'package:http/http.dart' as http;
 
 class PlayerBrain extends ChangeNotifier{
   List<AudioPlayer> _playerPool = [];
   int currentlyPlayingTrackIndex = 0;
 
-  Future<void> startAlbumPlayerPool(List<TrackData> tracks) async{
+  Future<void> startAlbumPlayerPool(String authToken, String albumId ,List<TrackData> tracks) async{
     // we will want a try-catch to handle errors
-    for (int i = 0; i< tracks.length; i++){
-      AudioPlayer player = AudioPlayer();
-      await player.setSourceUrl(tracks[i].youtubeUrl);
-      _playerPool.add(player);
+    try {
+      for (int i = 0; i< tracks.length; i++){
+        AudioPlayer player= AudioPlayer();
+        String trackUrl = await getTrackStreamUrl(authToken, albumId, tracks[i]);
+        player.setSourceUrl(trackUrl);
+        _playerPool.add(player);
+      }
+    }catch(e){
+      rethrow;
     }
   }
 
@@ -24,13 +33,19 @@ class PlayerBrain extends ChangeNotifier{
     await _playerPool[currentlyPlayingTrackIndex].resume();
   }
 
-  Future<void> playAlbum(List<TrackData> tracks) async {
-    AudioPlayer player= AudioPlayer();
-    await player.setSourceUrl(tracks[0].youtubeUrl);
-    await player.resume();
-    _playerPool.add(player);
-    tracks.removeAt(0);
-    startAlbumPlayerPool(tracks);
+  Future<void> playAlbum(String authToken, String albumId, List<TrackData> tracks) async {
+    try{
+      _playerPool = [];
+      AudioPlayer player= AudioPlayer();
+      String firstTrackUrl = await getTrackStreamUrl(authToken, albumId, tracks[0]);
+      await player.setSourceUrl(firstTrackUrl);
+      await player.resume();
+      _playerPool.add(player);
+      // tracks.removeAt(0);
+      // startAlbumPlayerPool(authToken, albumId ,tracks);
+    }catch(e){
+      rethrow;
+    }
   }
 
   Future<void> next() async {
@@ -44,6 +59,29 @@ class PlayerBrain extends ChangeNotifier{
 
   Future<void> pauseCurrentlyPlayedTrack() async{
     await _playerPool[currentlyPlayingTrackIndex].pause();
+  }
+
+  Future<String> getTrackStreamUrl(String authToken,String albumId ,TrackData track) async{
+    try{
+      // if fileUrl good if youtubeUrl (get the track right away it will be faster than trying to play a 403)
+      String streamUrl= '${kServerBaseUrl}albums/$albumId/tracks/${track.id}/stream';
+      if (track.fileURL != ""){
+        return streamUrl;
+      }
+      Uri url = Uri.parse("$kServerBaseUrl/albums/$albumId/${track.id}?retry=true");
+      http.Response response = await http.get(url, headers:{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $authToken'
+      });
+      Map<String, dynamic> resBody = jsonDecode(response.body);
+      TrackData refreshedTrackData = TrackData.fromJson(resBody);
+      if (track.fileURL != ""){
+        return streamUrl;
+      }
+      return refreshedTrackData.youtubeUrl;
+    }catch(e){
+      rethrow;
+    }
   }
 
 }
