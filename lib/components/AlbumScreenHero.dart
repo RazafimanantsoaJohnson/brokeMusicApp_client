@@ -1,8 +1,10 @@
 import 'dart:ui';
 
+import 'package:brokemusicapp/constants.dart';
 import 'package:brokemusicapp/logics/Navigation.dart';
 import 'package:brokemusicapp/models/Albums.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_glass_morphism/flutter_glass_morphism.dart';
 import 'package:provider/provider.dart';
 import 'constants.dart';
 
@@ -21,28 +23,22 @@ class AlbumScreenHero extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children:[
             Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(),
-                  ),
-                  child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
-                        child: Container(
-                          color: Colors.white.withAlpha(50),
+                  child: GlassMorphismContainer(
+                    opacity: 0.15,
+                    glassThickness: 2.0,
+                    blurIntensity: 23,
+                    tintColor: Color(kPlayerBackground),
                             width: kAlbumScreenHeroWidth,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Hero(
-                                tag: "AlbumCover",
-                                child: Image.network(
-                                  albumToShow.albumCoverUrl,
-                                  fit: BoxFit.fill,
-                                ),
+                            height: kAlbumScreenHeroHeight,
+                            padding: EdgeInsets.all(8.0),
+                            child: Hero(
+                              tag: "AlbumCover",
+                              child: Image.network(
+                                albumToShow.albumCoverUrl,
+                                fit: BoxFit.fill,
                               ),
-                            )
+                            ),
                         ),
-                      ),
-                ),
             ),
 
             Container(

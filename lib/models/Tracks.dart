@@ -24,7 +24,7 @@ class TrackData{
     trackNumber = track["track_number"];
     if (track["youtube_url"] != null){
       youtubeUrl = track["youtube_url"];
-      fileURL = track["youtube_url"];
+      fileURL = track["file_url"];
     }
   }
 }

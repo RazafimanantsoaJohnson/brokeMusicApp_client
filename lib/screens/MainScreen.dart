@@ -19,24 +19,27 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentPageIndex = 0;
-
-  String testAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJicm9rZW11c2ljYXBwIiwic3ViIjoiZWM4NzY4YWItMDcwYS00NTZmLTgxMTMtMDFmZmQ5MWViMmVjIiwiZXhwIjoxNzYyMTA4ODkxLCJpYXQiOjE3NjIxMDUyOTF9.EOVlM3zCsCuabGGbzrYTjpbckejgSxcLAkNNbHXvg1g";
+  String testAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJicm9rZW11c2ljYXBwIiwic3ViIjoiZWM4NzY4YWItMDcwYS00NTZmLTgxMTMtMDFmZmQ5MWViMmVjIiwiZXhwIjoxNzYyMjgzNTMyLCJpYXQiOjE3NjIyNzk5MzJ9.vXRzGncLCbVJjCG04o2vLoQO4y_tISMgvghE_zsNWLo";
 
   @override
   void initState() {
     super.initState();
+    Provider.of<NavigationBrain>(context, listen:false).getRecentlyVisitedAlbums(testAccessToken);
   }
   
   Future<void> selectAlbum(AlbumData album) async{
     Provider.of<NavigationBrain>(context, listen:false).setAlbumData(album);
     Provider.of<NavigationBrain>(context, listen: false).showAlbumScreen();
     await Provider.of<NavigationBrain>(context, listen:false).navigateToAlbumScreen(album, testAccessToken);
-  } 
-  
+  }
 
   List<Widget> showRecentlyVisitedAlbums(){
     List<AlbumData> albums = Provider.of<NavigationBrain>(context, listen: false).recentlyVisited;
     List<Widget> result = [];
+    result.add(
+        SizedBox(height: 16.0)
+    );
+
     for(int i=0; i<albums.length; i+=2){
       bool isSingleChild = false;
       if (albums.length <= i+1){
@@ -83,7 +86,7 @@ class _MainScreenState extends State<MainScreen> {
       rowChildren.add(
         SizedBox(width: 1.0)
       );
-      
+
       result.add(
         Row(
             mainAxisSize: MainAxisSize.max,
@@ -105,7 +108,6 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
 
     String currentUserToken = Provider.of<AuthBrain>(context).accessToken;
-    Provider.of<NavigationBrain>(context, listen:false).getRecentlyVisitedAlbums(testAccessToken);
     bool showAlbumScreen = Provider.of<NavigationBrain>(context).isAlbumScreenVisible;
 
     return Scaffold(
@@ -129,7 +131,7 @@ class _MainScreenState extends State<MainScreen> {
         SafeArea(
             child: SingleChildScrollView(
                 child: Column(
-                    spacing: 10.0,
+                    spacing: 12.0,
                     children: showRecentlyVisitedAlbums()
                 )
             )

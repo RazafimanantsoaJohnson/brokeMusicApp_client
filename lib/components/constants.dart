@@ -47,3 +47,6 @@ var kSearchFieldDecoration = InputDecoration(
         Icons.clear,
     ),
 );
+
+const kCancelButtonPadding = 24.0;
+const kCancelButtonSize = 40.0;

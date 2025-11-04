@@ -1,5 +1,9 @@
 import "package:brokemusicapp/components/constants.dart";
 import "package:brokemusicapp/constants.dart";
+import "package:brokemusicapp/models/Tracks.dart";
+import "package:brokemusicapp/models/Albums.dart";
+import "package:provider/provider.dart";
+import "package:brokemusicapp/logics/PlayerBrain.dart";
 import "package:flutter/material.dart";
 
 
@@ -14,20 +18,24 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    TrackData? currentTrack = Provider.of<PlayerBrain>(context, listen:false).getCurrentTrack();
+    AlbumData currentAlbum = Provider.of<PlayerBrain>(context).currentlyPlayingAlbum;
+    bool currentPlayStatus = Provider.of<PlayerBrain>(context).currentPlayStatus;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Color(kPlayerBackground).withAlpha(220),
         actions: [
           Padding(
-          padding: EdgeInsets.only(right: 24.0),
+          padding: EdgeInsets.only(right: kCancelButtonPadding),
           child: IconButton(
               onPressed: (){
                 Navigator.pop(context);
               },
               icon: Icon(
                   Icons.close,
-                size: 32.0,
+                size: kCancelButtonSize,
                 color: Colors.white,
               )
           ),
@@ -54,9 +62,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(kPlayerCoverBorderRadius),
-                  child: Image.network(
-                      "https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720be9d5526",
-                    fit: BoxFit.fill
+                  child: Hero(
+                    tag: "buttonAlbumCover",
+                    child: Image.network(
+                        currentAlbum.albumCoverUrl,
+                      fit: BoxFit.fill
+                    ),
                   ),
                 )
               ),
@@ -66,7 +77,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 spacing: 2.0,
                 children: [
                   Text(
-                    "Nikes",
+                    currentTrack != null?currentTrack.name:"",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
@@ -74,7 +85,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     )
                   ),
                   Text(
-                      "Frank Ocean",
+                      currentAlbum.artistName,
                       style: TextStyle(
                         color: Color(kSecondaryColor).withAlpha(200),
                         fontSize: 16.0,
@@ -85,7 +96,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
               )
             ),
 
-            SizedBox(height: 100.0),
+            SizedBox(height: 64.0),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -106,9 +117,15 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   ),
                   padding: EdgeInsets.all(8.0),
                   child: IconButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        if(currentPlayStatus){
+                          Provider.of<PlayerBrain>(context, listen:false).pauseCurrentlyPlayedTrack();
+                        }else{
+                          Provider.of<PlayerBrain>(context, listen:false).resumeCurrentTrack();
+                        }
+                      },
                       icon: Icon(
-                          Icons.pause,
+                          currentPlayStatus?Icons.pause:Icons.play_arrow,
                         size: 48.0,
                         color: Colors.white
                       )
@@ -116,7 +133,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 ),
                 IconButton(
                     onPressed: (){
-
+                      Provider.of<PlayerBrain>(context, listen:false).next();
                     },
                     icon: Icon(
                         Icons.skip_next,
