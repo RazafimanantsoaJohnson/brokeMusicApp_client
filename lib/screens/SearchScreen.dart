@@ -104,6 +104,7 @@ class SearchResultAlbumItem extends StatelessWidget {
                       Radius.circular(kAlbumItemSearchResultBorderRadius),
                     ),
                   ),
+                  padding: EdgeInsets.all(2.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(
                       Radius.circular(kAlbumItemSearchResultBorderRadius),
@@ -114,32 +115,34 @@ class SearchResultAlbumItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 8.0,
-                    children: [
-                      Text(
-                        album.name,
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.grey.shade700,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 8.0,
+                      children: [
+                        Text(
+                          album.name,
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.grey.shade700,
+                          ),
+                          textAlign: TextAlign.left,
                         ),
-                        textAlign: TextAlign.left,
-                      ),
-                      Text(
-                        album.artistName,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey.shade600,
+                        Text(
+                          album.artistName,
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey.shade600,
+                          ),
+                          textAlign: TextAlign.left,
                         ),
-                        textAlign: TextAlign.left,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],

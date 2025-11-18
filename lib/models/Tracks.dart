@@ -25,6 +25,9 @@ class TrackData{
     if (track["youtube_url"] != null){
       youtubeUrl = track["youtube_url"];
       fileURL = track["file_url"];
+    }else {
+      youtubeUrl = "";
+      fileURL = "";
     }
   }
 }

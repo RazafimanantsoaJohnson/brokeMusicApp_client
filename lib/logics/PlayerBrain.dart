@@ -47,6 +47,9 @@ class PlayerBrain extends ChangeNotifier{
 
   Future<void> playAlbum(String authToken, AlbumData album, List<TrackData> tracks) async {
     try{
+      if (_tracks.isNotEmpty &&  currentlyPlayingAlbum.id != album.id){
+        await destroyCurrentPlayers();
+      }
       List<TrackData> tmpTrack = [...tracks];
       currentlyPlayingTrackIndex = 0;
       currentlyPlayingAlbum = album;
@@ -86,6 +89,12 @@ class PlayerBrain extends ChangeNotifier{
     }
   }
 
+  Future<void> destroyCurrentPlayers() async{
+    for (int i=0; i<_playerPool.length; i++){
+      await _playerPool[i].dispose();
+    }
+  }
+
   Future<void> pauseCurrentlyPlayedTrack() async{
     _currentPlayStatus = false;
     await _playerPool[currentlyPlayingTrackIndex].pause();
@@ -106,6 +115,7 @@ class PlayerBrain extends ChangeNotifier{
         return streamUrl;
       }
       Uri url = Uri.parse("$kServerBaseUrl/albums/$albumId/tracks/${track.id}?retry=true");
+      print(url);
       http.Response response = await http.get(url, headers:{
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $authToken'

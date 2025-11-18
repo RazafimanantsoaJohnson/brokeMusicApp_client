@@ -39,6 +39,8 @@ class NavigationBrain extends ChangeNotifier {
         "Content-Type":"application/json",
       "Authorization": "Bearer $authToken"
       });
+      print(response.statusCode);
+      print(response.body);
       if (response.statusCode > 299){
         // should show an 'error UI element'
         throw Exception("error happened when navigation to album screen");
