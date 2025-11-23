@@ -4,6 +4,7 @@ import 'package:brokemusicapp/logics/PlayerBrain.dart';
 import 'package:brokemusicapp/screens/MainScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glass_morphism/flutter_glass_morphism.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -29,12 +30,14 @@ class MyApp extends StatelessWidget {
             primaryColor: Color(0xFFFFFFFF),
             primaryColorDark: Color(0xFFF1F1F1),
           ),
-          home: Scaffold(
-            body: Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: MainScreen()
-            )
+          home: LoaderOverlay(
+            child: Scaffold(
+              body: Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: MainScreen()
+              )
+            ),
           )
         ),
       ),

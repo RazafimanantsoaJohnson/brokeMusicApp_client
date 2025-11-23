@@ -1,3 +1,4 @@
+import 'package:brokemusicapp/constants.dart';
 import 'package:flutter/material.dart';
 
 const kCardWidth = 220.0;
@@ -46,6 +47,37 @@ var kSearchFieldDecoration = InputDecoration(
     suffixIcon: Icon(
         Icons.clear,
     ),
+);
+
+var kAuthInputDecoration = InputDecoration(
+  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+  border: OutlineInputBorder(
+      borderSide: BorderSide(width: 2.0),
+      borderRadius: BorderRadius.all(Radius.circular(14.0))
+  ),
+    enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(width: 2.0, color: Color(kPlayerBackground)),
+        borderRadius: BorderRadius.all(Radius.circular(14.0))
+    ),
+    focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.5),
+        borderRadius: BorderRadius.all(Radius.circular(14.0))
+    )
+);
+var kAuthInputErrorDecoration = InputDecoration(
+    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 14.0),
+    border: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.redAccent,width: 3.0),
+        borderRadius: BorderRadius.all(Radius.circular(14.0))
+    ),
+    enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.redAccent, width: 2.5),
+        borderRadius: BorderRadius.all(Radius.circular(14.0))
+    ),
+    focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.redAccent, width: 2.5),
+        borderRadius: BorderRadius.all(Radius.circular(14.0))
+    )
 );
 
 const kCancelButtonPadding = 24.0;

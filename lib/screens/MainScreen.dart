@@ -5,8 +5,10 @@ import 'package:brokemusicapp/constants.dart';
 import 'package:brokemusicapp/logics/AuthBrain.dart';
 import 'package:brokemusicapp/logics/Navigation.dart';
 import 'package:brokemusicapp/screens/AlbumScreen.dart';
+import 'package:brokemusicapp/screens/LoadingScreen.dart';
 import 'package:brokemusicapp/screens/SearchScreen.dart';
 import 'package:brokemusicapp/models/Albums.dart';
+import 'package:brokemusicapp/screens/SignupScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +21,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentPageIndex = 0;
-  String testAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJicm9rZW11c2ljYXBwIiwic3ViIjoiZWM4NzY4YWItMDcwYS00NTZmLTgxMTMtMDFmZmQ5MWViMmVjIiwiZXhwIjoxNzYzMzAwMTY5LCJpYXQiOjE3NjMyOTY1Njl9.whd0v0E3OyCL1SpVhMyBAry8DwtmGR6ntLk4exSUwLg";
+  String testAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJicm9rZW11c2ljYXBwIiwic3ViIjoiZWM4NzY4YWItMDcwYS00NTZmLTgxMTMtMDFmZmQ5MWViMmVjIiwiZXhwIjoxNzYzNTI0NDk1LCJpYXQiOjE3NjM1MjA4OTV9.PsjgJKAVznlZp0_feuhq01xqfwEEv97kp46xPAWFwT8";
 
   @override
   void initState() {
@@ -110,6 +112,7 @@ class _MainScreenState extends State<MainScreen> {
     String currentUserToken = Provider.of<AuthBrain>(context).accessToken;
     bool showAlbumScreen = Provider.of<NavigationBrain>(context).isAlbumScreenVisible;
 
+    return SignupScreen();
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: NavigationBar(
@@ -136,7 +139,7 @@ class _MainScreenState extends State<MainScreen> {
                 )
             )
         ),
-        SearchScreen()
+        SearchScreen(),
       ][currentPageIndex],
       floatingActionButton: FloatingPlayerButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

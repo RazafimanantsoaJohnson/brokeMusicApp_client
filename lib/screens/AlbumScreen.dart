@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:brokemusicapp/components/AlbumTitleItem.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:brokemusicapp/models/Albums.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:brokemusicapp/models/Tracks.dart';
 
@@ -65,7 +66,9 @@ class _AlbumScreenState extends State<AlbumScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 56.0),
                 child: FloatingActionButton.extended(
                     onPressed: ()async {
-                      Provider.of<PlayerBrain>(context, listen: false).playAlbum(authToken, album,tracks);
+                      context.loaderOverlay.show();
+                      await Provider.of<PlayerBrain>(context, listen: false).playAlbum(authToken, album,tracks);
+                      context.loaderOverlay.hide();
 
                       setState((){
                         isSongPlaying= !isSongPlaying;
@@ -90,9 +93,6 @@ class _AlbumScreenState extends State<AlbumScreen> {
               ),
               SizedBox(height: 32.0),
 
-              IconButton(onPressed: (){
-                Provider.of<PlayerBrain>(context, listen:false).next();
-              }, icon: Icon(Icons.skip_next)),
               IconButton(onPressed: (){
                 Provider.of<PlayerBrain>(context, listen:false).pauseCurrentlyPlayedTrack();
               }, icon: Icon(Icons.pause_circle_filled)),
