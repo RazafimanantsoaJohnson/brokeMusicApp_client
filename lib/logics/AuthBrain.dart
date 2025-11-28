@@ -9,6 +9,10 @@ class AuthBrain extends ChangeNotifier{
   String _accessToken = "";
   String _refreshToken = "";
 
+  get email => _email;
+  get accessToken => _accessToken;
+  get refreshToken => _refreshToken;
+
   Future<bool> signin(String email, String password) async{
     try{
       Uri url = Uri.parse("$kServerBaseUrl$kSigninEndpoint");
@@ -21,6 +25,7 @@ class AuthBrain extends ChangeNotifier{
         'Content-Type': 'application/json'
       });
       if (response.statusCode >299) {
+        print(response.body);
         return false;
       }
       var resBody= jsonDecode(response.body);
@@ -33,7 +38,7 @@ class AuthBrain extends ChangeNotifier{
     }
   }
 
-  Future<void> signup(String email, String password) async{
+  Future<bool> signup(String email, String password) async{
     try{
       Uri url= Uri.parse("$kServerBaseUrl$kSignupEndpoint");
       Map<String, String> reqBody = {
@@ -46,11 +51,12 @@ class AuthBrain extends ChangeNotifier{
       if (response.statusCode > 299){
         throw Exception("error happened when creating this user");
       }
+      await signin(email, password);
+      return true;
     }catch(e){
       rethrow;
     }
   }
 
-  get accessToken => _accessToken;
 }
 

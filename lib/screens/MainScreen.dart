@@ -8,7 +8,6 @@ import 'package:brokemusicapp/screens/AlbumScreen.dart';
 import 'package:brokemusicapp/screens/LoadingScreen.dart';
 import 'package:brokemusicapp/screens/SearchScreen.dart';
 import 'package:brokemusicapp/models/Albums.dart';
-import 'package:brokemusicapp/screens/SignupScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,18 +20,20 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentPageIndex = 0;
-  String testAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJicm9rZW11c2ljYXBwIiwic3ViIjoiZWM4NzY4YWItMDcwYS00NTZmLTgxMTMtMDFmZmQ5MWViMmVjIiwiZXhwIjoxNzYzNTI0NDk1LCJpYXQiOjE3NjM1MjA4OTV9.PsjgJKAVznlZp0_feuhq01xqfwEEv97kp46xPAWFwT8";
+  String accessToken = "";
 
   @override
   void initState() {
     super.initState();
-    Provider.of<NavigationBrain>(context, listen:false).getRecentlyVisitedAlbums(testAccessToken);
+    // accessToken = Provider.of<AuthBrain>(context).accessToken;
+    accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJicm9rZW11c2ljYXBwIiwic3ViIjoiZWM4NzY4YWItMDcwYS00NTZmLTgxMTMtMDFmZmQ5MWViMmVjIiwiZXhwIjoxNzYzODg4OTU3LCJpYXQiOjE3NjM4ODUzNTd9.fkDrSzIM0Q21kuZMJeK5ezkKGy5R7saKzgRMC9meC_o";
+    Provider.of<NavigationBrain>(context, listen:false).getRecentlyVisitedAlbums(accessToken);
   }
   
   Future<void> selectAlbum(AlbumData album) async{
     Provider.of<NavigationBrain>(context, listen:false).setAlbumData(album);
     Provider.of<NavigationBrain>(context, listen: false).showAlbumScreen();
-    await Provider.of<NavigationBrain>(context, listen:false).navigateToAlbumScreen(album, testAccessToken);
+    await Provider.of<NavigationBrain>(context, listen:false).navigateToAlbumScreen(album, accessToken);
   }
 
   List<Widget> showRecentlyVisitedAlbums(){
@@ -112,7 +113,6 @@ class _MainScreenState extends State<MainScreen> {
     String currentUserToken = Provider.of<AuthBrain>(context).accessToken;
     bool showAlbumScreen = Provider.of<NavigationBrain>(context).isAlbumScreenVisible;
 
-    return SignupScreen();
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: NavigationBar(
