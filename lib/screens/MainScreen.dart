@@ -21,13 +21,12 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int currentPageIndex = 0;
   String accessToken = "";
+  bool isInitState = false;
 
   @override
   void initState() {
     super.initState();
-    // accessToken = Provider.of<AuthBrain>(context).accessToken;
-    accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJicm9rZW11c2ljYXBwIiwic3ViIjoiZWM4NzY4YWItMDcwYS00NTZmLTgxMTMtMDFmZmQ5MWViMmVjIiwiZXhwIjoxNzY0NDAxNzkwLCJpYXQiOjE3NjQzOTgxOTB9.5MNRGuH8yxtP7g_PN_HODjVEcGRTKn9720RrDwc1Zqc";
-    Provider.of<NavigationBrain>(context, listen:false).getRecentlyVisitedAlbums(accessToken);
+    isInitState= true;
   }
   
   Future<void> selectAlbum(AlbumData album) async{
@@ -112,6 +111,12 @@ class _MainScreenState extends State<MainScreen> {
 
     String currentUserToken = Provider.of<AuthBrain>(context).accessToken;
     bool showAlbumScreen = Provider.of<NavigationBrain>(context).isAlbumScreenVisible;
+    if (isInitState){
+      Provider.of<NavigationBrain>(context, listen:false).getRecentlyVisitedAlbums(currentUserToken);
+      setState(() {
+        isInitState= false;
+      });
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
