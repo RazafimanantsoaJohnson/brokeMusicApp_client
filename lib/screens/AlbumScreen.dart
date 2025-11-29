@@ -36,14 +36,14 @@ class _AlbumScreenState extends State<AlbumScreen> {
     // }
   }
 
-  List<Widget> showListOfTracks(){
+  List<Widget> showListOfTracks(AlbumData album){
     List<TrackData> tracks = Provider.of<NavigationBrain>(context, listen:false).tracks;
     if (tracks.length == 0){
       return [];
     }
     List<Widget> listOfTracks = [];
     for (int i=0; i<tracks.length; i++){
-      listOfTracks.add(AlbumTitleItem(track: tracks[i]));
+      listOfTracks.add(AlbumTitleItem(track: tracks[i], album: album, allTracks: tracks));
     }
     return listOfTracks;
   }
@@ -53,6 +53,9 @@ class _AlbumScreenState extends State<AlbumScreen> {
     AlbumData album= Provider.of<NavigationBrain>(context).albumData;
     String authToken = Provider.of<AuthBrain>(context).accessToken;
     List<TrackData> tracks = Provider.of<NavigationBrain>(context).tracks;
+    AlbumData? currentlyPlayedAlbum = Provider.of<PlayerBrain>(context, listen: false).getCurrentlyPlayedAlbum();
+    bool currentPlayStatus = Provider.of<PlayerBrain>(context).currentPlayStatus;
+    bool isAlbumCurrentlyPlayed = (currentlyPlayedAlbum!=null && currentlyPlayedAlbum.id == album.id && currentPlayStatus);
 
     return SafeArea(
       child: Stack(
@@ -66,9 +69,13 @@ class _AlbumScreenState extends State<AlbumScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 56.0),
                 child: FloatingActionButton.extended(
                     onPressed: ()async {
-                      context.loaderOverlay.show();
-                      await Provider.of<PlayerBrain>(context, listen: false).playAlbum(authToken, album,tracks);
-                      context.loaderOverlay.hide();
+                      if (isAlbumCurrentlyPlayed){
+                        await Provider.of<PlayerBrain>(context, listen:false).pauseCurrentlyPlayedTrack();
+                      }else{
+                        context.loaderOverlay.show();
+                        await Provider.of<PlayerBrain>(context, listen: false).playAlbum(authToken, album,tracks, 0);
+                        context.loaderOverlay.hide();
+                      }
 
                       setState((){
                         isSongPlaying= !isSongPlaying;
@@ -77,7 +84,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
                     },
                   backgroundColor: Colors.white,
                     label: Text(
-                        "Play",
+                        isAlbumCurrentlyPlayed?"Pause":"Play",
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w700,
@@ -85,7 +92,7 @@ class _AlbumScreenState extends State<AlbumScreen> {
                       )
                     ),
                   icon: Icon(
-                    Icons.play_arrow_rounded,
+                    isAlbumCurrentlyPlayed?Icons.pause:Icons.play_arrow_rounded,
                     size: 40.0,
                     color: Colors.black,
                   ),
@@ -93,16 +100,10 @@ class _AlbumScreenState extends State<AlbumScreen> {
               ),
               SizedBox(height: 32.0),
 
-              IconButton(onPressed: (){
-                Provider.of<PlayerBrain>(context, listen:false).pauseCurrentlyPlayedTrack();
-              }, icon: Icon(Icons.pause_circle_filled)),
-              IconButton(onPressed: () async {
-                await Provider.of<AuthBrain>(context, listen:false).signin("email", "beybey");
-              }, icon: Icon(Icons.ac_unit_rounded)),
               Container(
                 color: Color(kSecondaryColor),
                 child: Column(
-                  children: showListOfTracks(),
+                  children: showListOfTracks(album),
                 )
               ),
 

@@ -21,6 +21,13 @@ class PlayerBrain extends ChangeNotifier{
     }
     return _tracks[currentlyPlayingTrackIndex];
   }
+  AlbumData? getCurrentlyPlayedAlbum(){
+    if (_playerPool.length == 0){
+      return null;
+    }
+    return currentlyPlayingAlbum;
+  }
+
   Future<void> startAlbumPlayerPool(String authToken, String albumId ,List<TrackData> tracks) async{
     // we will want a try-catch to handle errors
     try {
@@ -45,18 +52,18 @@ class PlayerBrain extends ChangeNotifier{
     await _playerPool[currentlyPlayingTrackIndex].resume();
   }
 
-  Future<void> playAlbum(String authToken, AlbumData album, List<TrackData> tracks) async {
+  Future<void> playAlbum(String authToken, AlbumData album, List<TrackData> tracks, int trackIndex) async {
     try{
       if (_tracks.isNotEmpty &&  currentlyPlayingAlbum.id != album.id){
         await destroyCurrentPlayers();
       }
       List<TrackData> tmpTrack = [...tracks];
-      currentlyPlayingTrackIndex = 0;
+      currentlyPlayingTrackIndex = trackIndex;
       currentlyPlayingAlbum = album;
       _tracks= [...tracks];
       _playerPool = [];
       AudioPlayer player= AudioPlayer();
-      String firstTrackUrl = await getTrackStreamUrl(authToken, album.id, tmpTrack[0]);
+      String firstTrackUrl = await getTrackStreamUrl(authToken, album.id, tmpTrack[trackIndex]);
       await player.setSourceUrl(firstTrackUrl);
       await player.resume();
 

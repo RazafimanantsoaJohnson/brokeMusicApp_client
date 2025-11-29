@@ -26,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     // accessToken = Provider.of<AuthBrain>(context).accessToken;
-    accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJicm9rZW11c2ljYXBwIiwic3ViIjoiZWM4NzY4YWItMDcwYS00NTZmLTgxMTMtMDFmZmQ5MWViMmVjIiwiZXhwIjoxNzYzODg4OTU3LCJpYXQiOjE3NjM4ODUzNTd9.fkDrSzIM0Q21kuZMJeK5ezkKGy5R7saKzgRMC9meC_o";
+    accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJicm9rZW11c2ljYXBwIiwic3ViIjoiZWM4NzY4YWItMDcwYS00NTZmLTgxMTMtMDFmZmQ5MWViMmVjIiwiZXhwIjoxNzY0NDAxNzkwLCJpYXQiOjE3NjQzOTgxOTB9.5MNRGuH8yxtP7g_PN_HODjVEcGRTKn9720RrDwc1Zqc";
     Provider.of<NavigationBrain>(context, listen:false).getRecentlyVisitedAlbums(accessToken);
   }
   
