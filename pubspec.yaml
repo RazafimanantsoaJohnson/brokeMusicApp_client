@@ -39,6 +39,7 @@ dependencies:
   http: ^1.5.0
   flutter_glass_morphism: ^1.0.2
   loader_overlay: ^5.0.0
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:

@@ -26,113 +26,115 @@ class _SignupScreenState extends State<SignupScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.only(left: 14, right: 14, top: 20.0, bottom: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              spacing: kAuthFormVerticalSpacing,
-              children: [
-                Column(
-                  spacing: kAuthFormVerticalSpacing,
-                  children: [
-                    Container(
-                      height: 240.0,
-                      width: 240.0,
-                      child: Image.asset(
-                          'resources/images/Icon_bma.png',
-                          fit: BoxFit.scaleDown
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(left: 14, right: 14, top: 20.0, bottom: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                spacing: kAuthFormVerticalSpacing,
+                children: [
+                  Column(
+                    spacing: kAuthFormVerticalSpacing,
+                    children: [
+                      Container(
+                        height: 240.0,
+                        width: 240.0,
+                        child: Image.asset(
+                            'resources/images/Icon_bma.png',
+                            fit: BoxFit.scaleDown
+                        ),
                       ),
-                    ),
-                    SizedBox(height: kAuthFormVerticalSpacing),
-                    TextField(
-                      onChanged: (value) {
-                        email = value;
-                      },
-                      decoration: kAuthInputDecoration.copyWith(
-                        labelText: "Email",
+                      SizedBox(height: kAuthFormVerticalSpacing),
+                      TextField(
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        decoration: kAuthInputDecoration.copyWith(
+                          labelText: "Email",
+                        ),
+                        style: TextStyle(color: Colors.grey.shade900),
+                        onSubmitted: (value) async{
+                          setState(() {});
+                        },
                       ),
-                      style: TextStyle(color: Colors.grey.shade900),
-                      onSubmitted: (value) async{
-                        setState(() {});
-                      },
-                    ),
-                    TextField(
-                      onChanged: (value) {
-                        password = value;
-                      },
-                      obscureText: true,
-                      decoration: isErrorPassword?kAuthInputErrorDecoration:(kAuthInputDecoration.copyWith(
-                        labelText: "Password",
-                      )),
-                      style: TextStyle(color: Colors.grey.shade900),
-                      onSubmitted: (value) async{
-                        setState(() {});
-                      },
-                    ),
-                    TextField(
-                      onChanged: (value) {
-                        passwordConfirmation = value;
-                      },
-                      obscureText: true,
-                      decoration: isErrorPassword?kAuthInputErrorDecoration:(kAuthInputDecoration.copyWith(
-                        labelText: "Confirm Password",
-                      )),
-                      style: TextStyle(color: Colors.grey.shade900),
-                      onSubmitted: (value) async{
-                        setState(() {});
-                      },
-                    ),
-                  ]
-                ),
-                ElevatedButton(
-                  onPressed: () async{
-                    try{
-                      context.loaderOverlay.show();
-                      setState((){
-                        if (passwordConfirmation != password){
-                          isErrorPassword = true;
+                      TextField(
+                        onChanged: (value) {
+                          password = value;
+                        },
+                        obscureText: true,
+                        decoration: isErrorPassword?kAuthInputErrorDecoration:(kAuthInputDecoration.copyWith(
+                          labelText: "Password",
+                        )),
+                        style: TextStyle(color: Colors.grey.shade900),
+                        onSubmitted: (value) async{
+                          setState(() {});
+                        },
+                      ),
+                      TextField(
+                        onChanged: (value) {
+                          passwordConfirmation = value;
+                        },
+                        obscureText: true,
+                        decoration: isErrorPassword?kAuthInputErrorDecoration:(kAuthInputDecoration.copyWith(
+                          labelText: "Confirm Password",
+                        )),
+                        style: TextStyle(color: Colors.grey.shade900),
+                        onSubmitted: (value) async{
+                          setState(() {});
+                        },
+                      ),
+                    ]
+                  ),
+                  ElevatedButton(
+                    onPressed: () async{
+                      try{
+                        context.loaderOverlay.show();
+                        setState((){
+                          if (passwordConfirmation != password){
+                            isErrorPassword = true;
+                            return;
+                          }
+                          isErrorPassword = false;
+                        });
+                        if (isErrorPassword){
                           return;
                         }
-                        isErrorPassword = false;
-                      });
-                      if (isErrorPassword){
-                        return;
+                        bool isSuccess = await Provider.of<AuthBrain>(context, listen:false).signup(email, password);
+                        context.loaderOverlay.hide();
+                        if (isSuccess){
+                          Navigator.pushNamed(context, '/main');
+                        }
+                      }catch(e){
+                        print(e);
                       }
-                      bool isSuccess = await Provider.of<AuthBrain>(context, listen:false).signup(email, password);
-                      context.loaderOverlay.hide();
-                      if (isSuccess){
-                        Navigator.pushNamed(context, '/main');
-                      }
-                    }catch(e){
-                      print(e);
-                    }
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.resolveWith<Color?>(
-                        (Set<WidgetState> states){
-                          if(states.contains(WidgetState.pressed)){
-                            return Color(kPlayerBackground).withAlpha(160);
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.resolveWith<Color?>(
+                          (Set<WidgetState> states){
+                            if(states.contains(WidgetState.pressed)){
+                              return Color(kPlayerBackground).withAlpha(160);
+                            }
+                            return Color(kPlayerBackground);
                           }
-                          return Color(kPlayerBackground);
-                        }
+                      ),
+                      padding: WidgetStateProperty.resolveWith<EdgeInsets?>(
+                          (Set<WidgetState> states){
+                            return EdgeInsets.symmetric(vertical: 16.0);
+                          }
+                      ),
                     ),
-                    padding: WidgetStateProperty.resolveWith<EdgeInsets?>(
-                        (Set<WidgetState> states){
-                          return EdgeInsets.symmetric(vertical: 16.0);
-                        }
-                    ),
-                  ),
-                  child: Text(
-                      "SIGN UP",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white
-                      )
+                    child: Text(
+                        "SIGN UP",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white
+                        )
+                    )
                   )
-                )
-              ],
+                ],
+              ),
             ),
           ),
         ),

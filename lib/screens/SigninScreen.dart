@@ -23,6 +23,7 @@ class _SignupScreenState extends State<SigninScreen> {
   Widget build(BuildContext context) {
     return LoaderOverlay(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         body: SafeArea(
           child: Padding(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:brokemusicapp/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -32,6 +33,7 @@ class AuthBrain extends ChangeNotifier{
       _accessToken = resBody['token'];
       _refreshToken = resBody['refresh_token'];
       _email = email;
+      await cacheRefreshToken(_refreshToken);
       return true;
     } catch(e){
       return false;
@@ -55,6 +57,36 @@ class AuthBrain extends ChangeNotifier{
       return true;
     }catch(e){
       rethrow;
+    }
+  }
+
+  Future<void> cacheRefreshToken(String refreshToken) async{
+    SharedPreferences localCache = await SharedPreferences.getInstance();
+    localCache.setString(kRefreshTokenKey, refreshToken);
+  }
+
+  Future<bool> refreshAccessToken() async{
+    try{
+      SharedPreferences localCache = await SharedPreferences.getInstance();
+      String? cachedRefreshToken = localCache.getString("refresh_token");
+      if(cachedRefreshToken != null && _refreshToken == ""){
+        _refreshToken = cachedRefreshToken;
+      }
+      Uri url = Uri.parse("$kServerBaseUrl$kRefreshTokenEndpoint");
+      http.Response response = await http.post(url, headers:{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $_refreshToken'
+      });
+
+      if (response.statusCode > 299){
+        return false;
+      }
+
+      var resBody = jsonDecode(response.body);
+      _accessToken =  resBody["token"];
+      return true;
+    }catch (e){
+      return false;
     }
   }
 

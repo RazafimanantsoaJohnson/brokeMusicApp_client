@@ -1,6 +1,7 @@
 import 'package:brokemusicapp/logics/AuthBrain.dart';
 import 'package:brokemusicapp/logics/Navigation.dart';
 import 'package:brokemusicapp/logics/PlayerBrain.dart';
+import 'package:brokemusicapp/screens/LoadingScreen.dart';
 import 'package:brokemusicapp/screens/MainScreen.dart';
 import 'package:brokemusicapp/screens/SigninScreen.dart';
 import 'package:brokemusicapp/screens/SignupScreen.dart';
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
       child: GlassMorphismThemeProvider(
         child: MaterialApp(
           routes: {
-            '/': (context) => SigninScreen(),
+            '/': (context) => LoadingScreen(),
+            '/signin': (context) => SigninScreen(),
             '/signup': (context) => SignupScreen(),
             '/main': (context) => MainScreen(),
           },
@@ -37,15 +39,6 @@ class MyApp extends StatelessWidget {
             primaryColor: Color(0xFFFFFFFF),
             primaryColorDark: Color(0xFFF1F1F1),
           ),
-          // home: LoaderOverlay(
-          //   child: Scaffold(
-          //     body: Container(
-          //       width: double.infinity,
-          //       height: double.infinity,
-          //       child: MainScreen()
-          //     )
-          //   ),
-          // )
         ),
       ),
     );
