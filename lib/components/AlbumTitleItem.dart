@@ -19,6 +19,8 @@ class AlbumTitleItem extends StatefulWidget {
 }
 
 class _AlbumTitleItemState extends State<AlbumTitleItem> {
+  bool isTitleClicked = false;
+
   @override
   Widget build(BuildContext context) {
     Duration duration = Duration(milliseconds: widget.track.duration);
@@ -40,6 +42,7 @@ class _AlbumTitleItemState extends State<AlbumTitleItem> {
         context.loaderOverlay.show();
         await Provider.of<PlayerBrain>(context, listen: false).playAlbum(authToken, widget.album, widget.allTracks, widget.track.trackNumber -1);
         context.loaderOverlay.hide();
+
       },
       child: Container(
         height: kAlbumTitleHeight,
@@ -52,7 +55,9 @@ class _AlbumTitleItemState extends State<AlbumTitleItem> {
               child: Center(
                 child: Text(
                   "${widget.track.trackNumber}",
-                  style: kAlbumTitleTrackNumberStyle,
+                  style: isTitleClicked?kAlbumTitleTrackNumberStyle: kAlbumTitleTrackNumberStyle.copyWith(
+                    color: Colors.grey.shade800,
+                  ),
                 ),
               ),
             ),

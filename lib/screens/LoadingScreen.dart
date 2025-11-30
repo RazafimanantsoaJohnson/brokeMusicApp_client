@@ -14,7 +14,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   Future<void> navigateToRightScreen() async{
     bool refreshTokenResult = await Provider.of<AuthBrain>(context).refreshAccessToken();
-    print("refresh token result====== $refreshTokenResult");
     if (refreshTokenResult){
       Navigator.of(context).pushNamed("/main");
       return;

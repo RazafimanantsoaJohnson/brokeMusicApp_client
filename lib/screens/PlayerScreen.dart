@@ -62,13 +62,13 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(kPlayerCoverBorderRadius),
-                  child: Hero(
-                    tag: "buttonAlbumCover",
-                    child: Image.network(
-                        currentAlbum.albumCoverUrl,
-                      fit: BoxFit.fill
+                    child: Hero(
+                      tag: "currentAlbumCover",
+                      child: Image.network(
+                          currentAlbum.albumCoverUrl,
+                        fit: BoxFit.fill
+                      ),
                     ),
-                  ),
                 )
               ),
             ),

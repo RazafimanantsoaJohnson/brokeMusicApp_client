@@ -12,23 +12,16 @@ class AlbumCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlassMorphismContainer(
-        opacity: 0.15,
-        glassThickness: 2.0,
-        blurIntensity: 23,
-        tintColor: Color(kPlayerBackground),
-        borderRadius: BorderRadius.circular(16.0),
-        child: Container(
-          height: kCardHeight,
-          padding: EdgeInsets.all(10.0),
-          child:Hero(
-            tag: "AlbumCover",
-            child: Image.network(
-              album.albumCoverUrl,
-              fit: BoxFit.fill,
-            ),
-          ),
-        ),
-      );
+      opacity: 0.15,
+      glassThickness: 2.0,
+      blurIntensity: 23,
+      tintColor: Color(kPlayerBackground),
+      borderRadius: BorderRadius.circular(16.0),
+      child: Container(
+        height: kCardHeight,
+        padding: EdgeInsets.all(10.0),
+        child: Image.network(album.albumCoverUrl, fit: BoxFit.fill),
+      ),
+    );
   }
 }
-

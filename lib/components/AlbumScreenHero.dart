@@ -17,6 +17,7 @@ class AlbumScreenHero extends StatelessWidget {
       context,
       listen: false,
     ).albumData;
+
     return Container(
       margin: EdgeInsets.only(
         top: kAlbumScreenHeroMarginTop,

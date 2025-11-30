@@ -9,7 +9,7 @@ const kTestAlbumUrl = "https://i.scdn.co/image/ab67616d0000b273c5649add07ed3720b
 const kAlbumTitleFontSize = 24.0;
 const kAlbumScreenHeroHeight = 340.0;
 const kAlbumScreenHeroWidth = 200.0;
-const kAlbumScreenHeroMarginTop = 50.0;
+const kAlbumScreenHeroMarginTop = 16.0;
 const kAlbumScreenHeroMarginBottom = 16.0;
 const kAlbumScreenCardWidth = 300.0;
 

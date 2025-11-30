@@ -25,7 +25,6 @@ class AlbumScreen extends StatefulWidget {
 class _AlbumScreenState extends State<AlbumScreen> {
   int numberOfRetry = 0;
   bool isSongPlaying = false;
-  final player = AudioPlayer();
 
   @override
   void initState() {
@@ -64,6 +63,23 @@ class _AlbumScreenState extends State<AlbumScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: kCancelButtonPadding),
+                    child: IconButton(onPressed: (){
+                      Provider.of<NavigationBrain>(context, listen: false).hideAlbumScreen();
+                    },
+                        icon: Icon(
+                          Icons.close,
+                          size: kCancelButtonSize,
+                          color: Colors.black,
+                        )
+                    ),
+                  ),
+                ],
+              ),
               AlbumScreenHero(),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 56.0),
@@ -111,23 +127,6 @@ class _AlbumScreenState extends State<AlbumScreen> {
             ],
           ),
         ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(right: kCancelButtonPadding),
-                child: IconButton(onPressed: (){
-                  Provider.of<NavigationBrain>(context, listen: false).hideAlbumScreen();
-                },
-                    icon: Icon(
-                      Icons.close,
-                      size: kCancelButtonSize,
-                      color: Colors.black,
-                    )
-                ),
-              ),
-            ],
-          ),
         ]
       ),
     );

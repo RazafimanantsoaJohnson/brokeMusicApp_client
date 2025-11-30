@@ -19,11 +19,6 @@ const kRefreshTokenEndpoint = "signin/refresh";
 
 const kRefreshTokenKey = "refresh_token";
 
-var testSignin = {
-  "email": "email",
-  "password": "beybey"
-};
-
 enum LoadingScreenReasons{
   playAlbum,
 }

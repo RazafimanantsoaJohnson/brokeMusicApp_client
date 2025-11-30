@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:brokemusicapp/components/AlbumCard.dart';
 import 'package:brokemusicapp/components/FloatingPlayerButton.dart';
 import 'package:brokemusicapp/components/constants.dart';
@@ -9,6 +11,7 @@ import 'package:brokemusicapp/screens/LoadingScreen.dart';
 import 'package:brokemusicapp/screens/SearchScreen.dart';
 import 'package:brokemusicapp/models/Albums.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -20,7 +23,6 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentPageIndex = 0;
-  String accessToken = "";
   bool isInitState = false;
 
   @override
@@ -32,6 +34,7 @@ class _MainScreenState extends State<MainScreen> {
   Future<void> selectAlbum(AlbumData album) async{
     Provider.of<NavigationBrain>(context, listen:false).setAlbumData(album);
     Provider.of<NavigationBrain>(context, listen: false).showAlbumScreen();
+    String accessToken = Provider.of<AuthBrain>(context, listen:false).accessToken;
     await Provider.of<NavigationBrain>(context, listen:false).navigateToAlbumScreen(album, accessToken);
   }
 
@@ -118,36 +121,38 @@ class _MainScreenState extends State<MainScreen> {
       });
     }
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      bottomNavigationBar: NavigationBar(
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-        backgroundColor: Color(kTertiaryColor),
-        selectedIndex: currentPageIndex,
-        onDestinationSelected: (int index){
-          setState((){
-            Provider.of<NavigationBrain>(context, listen:false).hideAlbumScreen();
-            currentPageIndex = index;
-          });
-        },
-        destinations: <Widget>[
-          NavigationDestination(icon: Icon(Icons.home_rounded), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.search), label: 'Search')
-        ],
-      ),
-      body: showAlbumScreen? AlbumScreen(): <Widget>[
-        SafeArea(
-            child: SingleChildScrollView(
-                child: Column(
-                    spacing: 12.0,
-                    children: showRecentlyVisitedAlbums()
-                )
-            )
+    return LoaderOverlay(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        bottomNavigationBar: NavigationBar(
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+          backgroundColor: Color(kTertiaryColor),
+          selectedIndex: currentPageIndex,
+          onDestinationSelected: (int index){
+            setState((){
+              Provider.of<NavigationBrain>(context, listen:false).hideAlbumScreen();
+              currentPageIndex = index;
+            });
+          },
+          destinations: <Widget>[
+            NavigationDestination(icon: Icon(Icons.home_rounded), label: 'Home'),
+            NavigationDestination(icon: Icon(Icons.search), label: 'Search')
+          ],
         ),
-        SearchScreen(),
-      ][currentPageIndex],
-      floatingActionButton: FloatingPlayerButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        body: showAlbumScreen? AlbumScreen(): <Widget>[
+          SafeArea(
+              child: SingleChildScrollView(
+                  child: Column(
+                      spacing: 12.0,
+                      children: showRecentlyVisitedAlbums()
+                  )
+              )
+          ),
+          SearchScreen(),
+        ][currentPageIndex],
+        floatingActionButton: FloatingPlayerButton(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      ),
     );
   }
 }

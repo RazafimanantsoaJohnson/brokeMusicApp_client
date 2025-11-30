@@ -56,13 +56,13 @@ class _FloatingPlayerButtonState extends State<FloatingPlayerButton> {
                           SizedBox(
                             width: 60.0,
                             height: 60.0,
-                            child: Hero(
-                              tag: "buttonAlbumCover",
-                              child: Image.network(
-                                currentAlbum.albumCoverUrl,
-                                fit: BoxFit.contain,
+                              child: Hero(
+                                tag: "currentAlbumCover",
+                                child: Image.network(
+                                  currentAlbum.albumCoverUrl,
+                                  fit: BoxFit.contain,
+                                ),
                               ),
-                            ),
                           ),
                           Text(
                               currentTrack.name,
