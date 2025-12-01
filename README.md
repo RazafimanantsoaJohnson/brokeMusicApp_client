@@ -24,16 +24,16 @@ The client will call for the tracks' data:
   The user is redirected to the Signin screen if the check and/or authentication by refresh token is unsuccessful. 
  ## Home Screen
   It will show the user a list of his recently visited albums.
-  [home screen](https://github.com/RazafimanantsoaJohnson/brokeMusicApp_client/blob/main/illustrations/home_screen_illustration.png)
+  ![home screen](https://github.com/RazafimanantsoaJohnson/brokeMusicApp_client/blob/main/illustrations/home_screen_illustration.png)
  ## Search Screen
-  [search_screen](https://github.com/RazafimanantsoaJohnson/brokeMusicApp_client/blob/main/illustrations/search_screen_illustration.png)
+  ![search_screen](https://github.com/RazafimanantsoaJohnson/brokeMusicApp_client/blob/main/illustrations/search_screen_illustration.png)
  ## Album Screen
   A screen which will show the list of tracks within the album. 
   The user can play the whole album by tapping the 'play' button or by clicking to the song he wants.
-  [album_screen](https://github.com/RazafimanantsoaJohnson/brokeMusicApp_client/blob/main/illustrations/album_screen_illustration_with_player.png)
+  ![album_screen](https://github.com/RazafimanantsoaJohnson/brokeMusicApp_client/blob/main/illustrations/album_screen_illustration_with_player.png)
  ## Player Screen
   A screen which helps the user have more control over the songs being played, accessible through the persistent button showing the currently played song.
-  [player_screen](https://github.com/RazafimanantsoaJohnson/brokeMusicApp_client/blob/main/illustrations/player_screen_illustration.png)
+  ![player_screen](https://github.com/RazafimanantsoaJohnson/brokeMusicApp_client/blob/main/illustrations/player_screen_illustration.png)
 
  ## Gif illustration
-  [illustration](https://github.com/RazafimanantsoaJohnson/brokeMusicApp_client/blob/main/illustrations/switch_song_illustration.gif)
+  ![illustration](https://github.com/RazafimanantsoaJohnson/brokeMusicApp_client/blob/main/illustrations/switch_song_illustration.gif)
